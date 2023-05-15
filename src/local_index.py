@@ -4,7 +4,7 @@ import os
 import asyncio
 import uuid
 
-import item_selector as ItemSelector
+from src.item_selector import ItemSelector
 
 class CreateIndexConfig:
     def __init__(self, version: int, deleteIfExists: bool = False, metadata_config: dict = {}):
@@ -96,14 +96,14 @@ class LocalIndex:
     def cancelUpdate(self) -> None:
         self._update = None
 
-    async def createIndex(self, config: Dict[str, Any] = {'version':1}) -> None:
-        if await self.isIndexCreated():
+    def createIndex(self, config: Dict[str, Any] = {'version':1}) -> None:
+        if self.isIndexCreated():
             if config.get('deleteIfExists'):
-                await self.deleteIndex()
+                self.deleteIndex()
             else:
                 raise Exception('Index already exists')
         try:
-            await os.makedirs(self._folderPath, exist_ok=True)
+            os.makedirs(self._folderPath, exist_ok=True)
             self._data = {
                 'version': config['version'],
                 'metadata_config': config.get('metadata_config', {}),
@@ -112,7 +112,7 @@ class LocalIndex:
             with open(os.path.join(self._folderPath, 'index.json'), 'w', encoding='utf-8') as f:
                 json.dump(self._data, f)
         except Exception:
-            await self.deleteIndex()
+            self.deleteIndex()
             raise Exception('Error creating index')
     
     async def deleteIndex(self) -> None:
@@ -165,7 +165,7 @@ class LocalIndex:
             await self.endUpdate()
             return new_item
     
-    async def isIndexCreated(self) -> bool:
+    def isIndexCreated(self) -> bool:
         return os.path.exists(os.path.join(self._folderPath, 'index.json'))
     
     async def listItems(self) -> List[Dict[str, Any]]:
@@ -218,12 +218,12 @@ class LocalIndex:
     async def loadIndexData(self) -> None:
         if self._data:
             return
-        if not await self.isIndexCreated():
+        if not self.isIndexCreated():
             raise Exception('Index does not exist')
         with open(os.path.join(self._folderPath, 'index.json'), 'r', encoding='utf-8') as f:
             self._data = json.load(f)
 
-    async def add_item_to_update(self, item: dict, unique: bool) -> dict:
+    async def addItemToUpdate(self, item: dict, unique: bool) -> dict:
         # Ensure vector is provided
         if 'vector' not in item:
             raise ValueError('Vector is required')
