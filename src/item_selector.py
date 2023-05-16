@@ -1,14 +1,29 @@
 from typing import List
 import math
 
+
 class ItemSelector:
+    """
+    A class for selecting items based on their similarity.
+    """
     @staticmethod
-    def cosineSimilarity(vector1: List[int], vector2: List[int]) -> float:
-        # Return the quotient of the dot product and the product of the norms
-        return ItemSelector.dotProduct(vector1, vector2) / (ItemSelector.normalize(vector1) * ItemSelector.normalize(vector2))
+    def cosine_similarity(vector1: List[int],
+                          vector2: List[int]) -> float:
+        """
+        Returns the similarity between two vectors using the cosine similarity.
+        """
+        # the quotient of the dot product and the product of the norms
+        return (ItemSelector.dot_product(vector1, vector2) /
+                (ItemSelector.normalize(vector1) *
+                 ItemSelector.normalize(vector2)))
 
     @staticmethod
     def normalize(vector: List[int]) -> float:
+        """
+        The norm of a vector is
+            the square root of the sum of the squares of the elements.
+        Returns the normalized value of a vector.
+        """
         # Initialize a variable to store the sum of the squares
         sum = 0
         # Loop through the elements of the array
@@ -17,45 +32,67 @@ class ItemSelector:
             sum += vector[i] * vector[i]
         # Return the square root of the sum
         return math.sqrt(sum)
-    
+
     @staticmethod
-    def normalizedCosineSimilarity(vector1: List[int], norm1: float, vector2: List[int], norm2: float) -> float:
+    def normalized_cosine_similarity(vector1: List[int],
+                                     norm1: float,
+                                     vector2: List[int],
+                                     norm2: float) -> float:
+        """
+        Returns the similarity between two vectors using the cosine similarity,
+            considers norms.
+        """
         # Return the quotient of the dot product and the product of the norms
-        return ItemSelector.dotProduct(vector1, vector2) / (norm1 * norm2)
-    
+        return ItemSelector.dot_product(vector1, vector2) / (norm1 * norm2)
+
     @staticmethod
-    def select(metadata: dict, filter: dict) -> bool:
+    def select(metadata: dict,
+               filter: dict) -> bool:
+        """
+        Handles filter logic.
+        """
         if filter is None:
             return True
         for key in filter:
             if key == '$and':
-                if not all(ItemSelector.select(metadata, f) for f in filter['$and']):
+                if not all(ItemSelector.select(metadata, f)
+                           for f in filter['$and']):
                     return False
             elif key == '$or':
-                if not any(ItemSelector.select(metadata, f) for f in filter['$or']):
+                if not any(ItemSelector.select(metadata, f)
+                           for f in filter['$or']):
                     return False
             else:
                 value = filter[key]
                 if value is None:
                     return False
                 elif isinstance(value, dict):
-                    if not ItemSelector.metadataFilter(metadata.get(key), value):
+                    if not ItemSelector.metadataFilter(metadata.get(key),
+                                                       value):
                         return False
                 else:
                     if metadata.get(key) != value:
                         return False
         return True
-    
+
     @staticmethod
-    def dotProduct(vector1: List[int], vector2: List[int]) -> int:
+    def dot_product(vector1: List[int],
+                    vector2: List[int]) -> int:
+        """
+        Returns the dot product of two vectors.
+        """
         # Zip the two vectors and multiply each pair, then sum the products
         return sum(a * b for a, b in zip(vector1, vector2))
-    
+
     @staticmethod
-    def metadata_filter(value, filter):
+    def metadata_filter(value,
+                        filter) -> bool:
+        """
+        Handles metadata filter logic.
+        """
         if value is None:
             return False
-        
+
         for key in filter:
             if key == "$eq":
                 if value != filter[key]:
@@ -84,5 +121,5 @@ class ItemSelector:
             else:
                 if value != filter[key]:
                     return False
-        
+
         return True
