@@ -6,12 +6,14 @@ import asyncio
 import openai
 import openai_async
 import timeit
+import python_dotenv
 
 start = timeit.default_timer()
 
 from src.local_index import LocalIndex
 
-openai.api_key = "***REMOVED***"
+openai.api_key = 'test'
+print(openai.debug)
 
 print(os.path.join(os.getcwd(), 'index'))
 index = LocalIndex(os.path.join(os.getcwd(), 'index'))
@@ -23,26 +25,29 @@ def create_index():
     # print(index.isIndexCreated())
 
 async def get_vector(text: str):
+    print(text)
     response = await openai_async.embeddings(
                                             openai.api_key,
                                             timeout=2,
                                             payload={"model": "text-embedding-ada-002", 
                                                      "input": [text]},
                                         )
+    print(response)
     return response.json()['data'][0]['embedding']
 
 async def add_item(text: str):
     vector = await get_vector(text)
     metadata = {'text': text}
+    print(vector, metadata)
     await index.insertItem({'vector': vector, 
                             'metadata': metadata})
 
 async def insert_payload():
     try:
-        await add_item('apple')
-        await add_item('oranges')
-        await add_item('red')
-        await add_item('blue')
+        await add_item('bob')
+        await add_item('orb')
+        await add_item('cob')
+        await add_item('lob')
     except Exception as e:
         print('insert issue', e)
 
@@ -58,15 +63,16 @@ async def query(text: str):
 async def main():
     create_index()
     await insert_payload()
-    await query('green')
-    await query('banana')
+    await query('zap')
+    await query('bob')
+    await query('rob')
 
 if __name__ == '__main__':
-    try:
-        asyncio.run(main())
-        stop = timeit.default_timer()
-        execution_time = stop - start
+    # try:
+    asyncio.run(main())
+    #     stop = timeit.default_timer()
+    #     execution_time = stop - start
 
-        print("Program Executed in "+str(execution_time)) # It returns time in seconds
-    except Exception as e:
-        print('main issue', e)
+    #     print("Program Executed in "+str(execution_time)) # It returns time in seconds
+    # except Exception as e:
+    #     print('main issue', e)
