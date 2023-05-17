@@ -284,10 +284,10 @@ class LocalIndex:
         norm = ItemSelector.normalize(vector)
         distances = []
         for i, item in enumerate(items):
-            distance = ItemSelector.normalizedCosineSimilarity(vector,
-                                                               norm,
-                                                               item['vector'],
-                                                               item['norm'])
+            distance = ItemSelector.normalized_cosine_similarity(vector,
+                                                                 norm,
+                                                                 item['vector'], # noqa
+                                                                 item['norm'])
             distances.append({'index': i, 'distance': distance})
         # Sort by distance DESCENDING
         distances = sorted(distances,
