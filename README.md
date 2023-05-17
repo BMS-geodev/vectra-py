@@ -13,7 +13,9 @@ Keep in mind that your entire Vectra index is loaded into memory so it's not wel
 Pinecone style namespaces aren't directly supported but you could easily mimic them by creating a separate Vectra index (and folder) for each namespace.
 
 ## Installation
+WIP, run via example.py for the moment.
 
+Eventually:
 ```
 $ pip install vectra-py
 ```
