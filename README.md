@@ -44,13 +44,7 @@ if not index.isIndexCreated():
 Add some items to your index:
 
 ```python
-import { OpenAIApi, Configuration } from 'openai';
-
-const configuration = new Configuration({
-    apiKey: `<YOUR_KEY>`,
-});
-
-const api = new OpenAIApi(configuration);
+openai.api_key = os.environ.get("OPENAI_APIKEY")
 
 async def get_vector(text: str):
     print(text)
