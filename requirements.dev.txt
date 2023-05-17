@@ -1,0 +1,3 @@
+openai
+openai-async
+python-dotenv

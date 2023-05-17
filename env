@@ -1,0 +1,2 @@
+# copy to .env, then replace ### with your API key.
+OPENAI_APIKEY=###
