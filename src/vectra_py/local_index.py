@@ -4,7 +4,7 @@ import os
 import asyncio
 import uuid
 
-from src.item_selector import ItemSelector
+from vectra_py.item_selector import ItemSelector
 
 
 class CreateIndexConfig:
