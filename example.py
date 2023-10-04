@@ -7,14 +7,12 @@ import openai
 import openai_async
 import timeit
 from dotenv import load_dotenv
-from src.local_index import LocalIndex
-# from src.local_index import LocalIndex
-# from vectra_py.src.local_index import LocalIndex
+from src.vectra_py.local_index import LocalIndex
 
 # Start a simple timer to view execution time.
 start = timeit.default_timer()
 
-# use dotenv and an .env file or similar to store your API key
+# use dotenv and an .env file or similar to store your API key, or set to env var. 
 load_dotenv()
 
 openai.api_key = os.environ.get("OPENAI_APIKEY")
