@@ -1,0 +1,7 @@
+tiktoken
+openai
+bs4
+markdownify
+transformers
+sentence-transformers
+aiofiles
