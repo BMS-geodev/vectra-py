@@ -1,3 +1,10 @@
 openai
+tiktoken
 openai-async
 python-dotenv
+bs4
+markdownify
+transformers
+sentence-transformers
+colorize
+aiofiles
