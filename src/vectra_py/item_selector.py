@@ -24,6 +24,10 @@ class ItemSelector:
             the square root of the sum of the squares of the elements.
         Returns the normalized value of a vector.
         """
+        # crutch to santize lists of lists that come from some embedding models
+        # this will almost certainly have consequences
+        if isinstance(vector[0], list):
+            vector = vector[0]
         # Initialize a variable to store the sum of the squares
         sum = 0
         # Loop through the elements of the array
