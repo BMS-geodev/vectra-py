@@ -1,3 +1,5 @@
+Update: Revisiting this very stale project in Fall 2024. Going to start with a general review of the source vectra project, then go from there. As such I'll probably reply to the issues and close them, pending new discussion. 
+
 # vectra-py
 This is a faithful port of Steven Ickman's [Vectra](https://github.com/Stevenic/vectra) in memory vector index project. Only modifications were to port into python, adjust for format, and generate some python friendly example code. Below readme follows on from his, with similar pythonic adjustments.
 
