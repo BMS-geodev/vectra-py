@@ -1,0 +1,12 @@
+openai-async
+openai
+asyncio
+aiofiles
+dataclasses
+pathlib
+python-dotenv
+tiktoken
+transformers
+sentence-transformers
+bs4
+markdownify
