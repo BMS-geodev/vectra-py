@@ -7,8 +7,8 @@ class ItemSelector:
     A class for selecting items based on their similarity.
     """
     @staticmethod
-    def cosine_similarity(vector1: List[int],
-                          vector2: List[int]) -> float:
+    def cosine_similarity(vector1: List[float],
+                          vector2: List[float]) -> float:
         """
         Returns the similarity between two vectors using the cosine similarity.
         """
@@ -18,7 +18,7 @@ class ItemSelector:
                  ItemSelector.normalize(vector2)))
 
     @staticmethod
-    def normalize(vector: List[int]) -> float:
+    def normalize(vector: List[float]) -> float:
         """
         The norm of a vector is
             the square root of the sum of the squares of the elements.
@@ -38,9 +38,9 @@ class ItemSelector:
         return math.sqrt(sum)
 
     @staticmethod
-    def normalized_cosine_similarity(vector1: List[int],
+    def normalized_cosine_similarity(vector1: List[float],
                                      norm1: float,
-                                     vector2: List[int],
+                                     vector2: List[float],
                                      norm2: float) -> float:
         """
         Returns the similarity between two vectors using the cosine similarity,
@@ -80,12 +80,17 @@ class ItemSelector:
         return True
 
     @staticmethod
-    def dot_product(vector1: List[int],
-                    vector2: List[int]) -> int:
+    def dot_product(vector1: List[float],
+                    vector2: List[float]) -> float:
         """
         Returns the dot product of two vectors.
         """
         # Zip the two vectors and multiply each pair, then sum the products
+        if isinstance(vector1[0], list):
+            vector1 = [item for sublist in vector1 for item in sublist]
+        if isinstance(vector2[0], list):
+            vector2 = [item for sublist in vector2 for item in sublist]
+        
         return sum(a * b for a, b in zip(vector1, vector2))
 
     @staticmethod
@@ -105,16 +110,16 @@ class ItemSelector:
                 if value == filter[key]:
                     return False
             elif key == "$gt":
-                if not isinstance(value, int) or value <= filter[key]:
+                if not isinstance(value, float) or value <= filter[key]:
                     return False
             elif key == "$gte":
-                if not isinstance(value, int) or value < filter[key]:
+                if not isinstance(value, float) or value < filter[key]:
                     return False
             elif key == "$lt":
-                if not isinstance(value, int) or value >= filter[key]:
+                if not isinstance(value, float) or value >= filter[key]:
                     return False
             elif key == "$lte":
-                if not isinstance(value, int) or value > filter[key]:
+                if not isinstance(value, float) or value > filter[key]:
                     return False
             elif key == "$in":
                 if not isinstance(value, bool) or value not in filter[key]:

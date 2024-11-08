@@ -1,8 +1,8 @@
 from typing import List, Optional
 
-from custom_types import Tokenizer
-from gpt3_tokenizer import GPT3Tokenizer
-from all_MiniLM_L6_v2_tokenizer import OSSTokenizer
+from .custom_types import Tokenizer
+from .gpt3_tokenizer import GPT3Tokenizer
+from .all_MiniLM_L6_v2_tokenizer import OSSTokenizer
 
 ALPHANUMERIC_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 

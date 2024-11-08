@@ -1,7 +1,7 @@
 import asyncio
 import requests
 from typing import List, Union, Dict
-from all_MiniLM_L6_v2_tokenizer import OSSTokenizer
+from .all_MiniLM_L6_v2_tokenizer import OSSTokenizer
 
 
 class BaseOSSEmbeddingsOptions:

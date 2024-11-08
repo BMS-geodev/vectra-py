@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Union, Dict, Optional, Any
+from typing import List, Union, Dict, Optional, Any, TypeVar, Generic
 
 
 @dataclass
@@ -68,11 +68,13 @@ class MetadataFilter:
 class MetadataTypes:
     value: Union[int, str, bool]
 
+TMetadata = TypeVar('TMetadata', bound=Dict[str, 'MetadataTypes'])
 
-@dataclass
-class QueryResult:
-    item: IndexItem
-    score: float
+
+class QueryResult(Generic[TMetadata]):
+    def __init__(self, item: IndexItem, score: float):
+        self.item = item
+        self.score = score
 
 
 @dataclass
